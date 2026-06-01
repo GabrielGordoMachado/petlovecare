@@ -1,0 +1,15 @@
+# Node
+node_modules/
+dist/
+
+# Ambiente
+.env
+
+# Prisma
+api/prisma/migrations/*.sql
+
+# WebStorm
+.idea/
+
+# Logs
+*.log
