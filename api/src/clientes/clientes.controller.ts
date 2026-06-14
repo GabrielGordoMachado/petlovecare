@@ -1,18 +1,14 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { ClientesService } from './clientes.service';
+import { CriarClienteDto } from './dto/criar-cliente.dto';
+import { AtualizarClienteDto } from './dto/atualizar-cliente.dto';
 
 @Controller('clientes')
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
 
   @Post()
-  criar(@Body() body: {
-    cpf: string;
-    nome: string;
-    telefone: string;
-    email: string;
-    senha: string;
-  }) {
+  criar(@Body() body: CriarClienteDto) {
     return this.clientesService.criar(body);
   }
 
@@ -27,12 +23,7 @@ export class ClientesController {
   }
 
   @Put(':cpf')
-  atualizar(@Param('cpf') cpf: string, @Body() body: {
-    nome?: string;
-    telefone?: string;
-    email?: string;
-    senha?: string;
-  }) {
+  atualizar(@Param('cpf') cpf: string, @Body() body: AtualizarClienteDto) {
     return this.clientesService.atualizar(cpf, body);
   }
 
