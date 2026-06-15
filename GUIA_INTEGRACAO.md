@@ -21,7 +21,7 @@ Estrutura do monorepo:
 ```
 petlovecare/
 ├── api/        → backend NestJS + Prisma (já pronto)
-├── web/        → app React (José Vitor) — fluxo do CLIENTE
+├── web/        → app React (Sérgio) — fluxo do CLIENTE
 ├── desktop/    → app Electron (Gabriel) — fluxo do ADMIN
 └── docker-compose.yml  → Postgres local
 ```
@@ -41,7 +41,7 @@ Existem **dois ambientes**. O frontend só muda **uma linha** (a `baseURL` do ax
 | **Produção (Railway)** | `https://petlovecare-api-production.up.railway.app` | Padrão. Para desenvolver as telas sem subir nada local. |
 | **Local** | `http://localhost:3000` | Só se você precisa testar/alterar a própria API. |
 
-**Recomendação:** José Vitor (web) usa **produção** o tempo todo. Gabriel (desktop + backend) sobe a API local quando precisa testar mudanças na própria API.
+**Recomendação:** Sérgio (web) usa **produção** o tempo todo. Gabriel (desktop + backend) sobe a API local quando precisa testar mudanças na própria API.
 
 Para não ter que editar código toda hora, use variável de ambiente (ver seção 4 e 5).
 
@@ -152,7 +152,7 @@ Erros vêm como HTTP 400/404/409 com `{ message }`.
 
 ---
 
-## 4. App WEB — José Vitor (fluxo do CLIENTE)
+## 4. App WEB — Sérgio (fluxo do CLIENTE)
 
 ### Criar o projeto
 Na raiz do repo:
