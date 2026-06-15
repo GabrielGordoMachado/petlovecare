@@ -10,6 +10,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 
 // Use contextBridge
-window.ipcRenderer.on('main-process-message', (_event, message) => {
-  console.log(message)
-})
+// O `ipcRenderer` so existe quando rodando dentro do Electron (injetado pelo preload).
+// O guard evita TypeError ao abrir a UI direto no navegador (ex.: http://localhost:5173).
+if (window.ipcRenderer) {
+  window.ipcRenderer.on('main-process-message', (_event, message) => {
+    console.log(message)
+  })
+}
