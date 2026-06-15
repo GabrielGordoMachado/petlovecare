@@ -1,14 +1,41 @@
+/* ── Design tokens (identidade PetLove Care) ── */
+:root {
+  --navy: #1e293b;
+  --navy-deep: #162032;
+  --coral: #ff7f50;
+  --coral-dark: #ed6a3a;
+  --teal: #2c6e8f;
+  --input: #d9d9d9;
+  --surface: #f5f5f5;
+  --bg-light: #f8fafc;
+  --white: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --line: #e2e8f0;
+
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+
+  font-family: var(--font-body);
+  line-height: 1.5;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 * { box-sizing: border-box; }
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  color: #24292f;
-  background-color: #ffffff;
-  -webkit-font-smoothing: antialiased;
-}
+html, body, #root { height: 100%; }
 
 body {
   margin: 0;
-  min-height: 100vh;
+  background: var(--bg-light);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
 }

@@ -1,8 +1,16 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import Store from 'electron-store'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+// Armazenamento persistente em disco (pasta de dados do usuario do app).
+// Exposto ao renderer via IPC (ver preload.ts) para guardar a sessao do admin.
+const store = new Store()
+ipcMain.handle('store:get', (_e, key: string) => store.get(key))
+ipcMain.handle('store:set', (_e, key: string, value: unknown) => store.set(key, value))
+ipcMain.handle('store:delete', (_e, key: string) => store.delete(key))
 
 // The built directory structure
 //
@@ -27,6 +35,12 @@ let win: BrowserWindow | null
 function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    width: 1100,
+    height: 760,
+    minWidth: 900,
+    minHeight: 640,
+    autoHideMenuBar: true,
+    backgroundColor: '#1E293B',
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
     },

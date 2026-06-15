@@ -1,10 +1,22 @@
 import axios from 'axios';
 
+// baseURL vem do .env (VITE_API_URL). Sem .env, usa a API de producao (Railway).
+// Para testar contra a API local, crie desktop/.env com:
+//   VITE_API_URL=http://localhost:3000
 const api = axios.create({
-  baseURL: 'https://petlovecare-api-production.up.railway.app',
+  baseURL: import.meta.env.VITE_API_URL || 'https://petlovecare-api-production.up.railway.app',
 });
 
 export default api;
+
+// Autenticação (provisória)
+// A API ainda não tem POST /auth/login. Enquanto isso, o login do admin é feito
+// buscando o administrador por CPF. Obs.: GET /administradores/:cpf NÃO retorna a
+// senha (a API a oculta), então a verificação real de senha depende da rota
+// POST /auth/login (TODO do Gabriel — ver GUIA_INTEGRACAO.md, seção 6).
+export const authService = {
+  loginAdmin: (cpf: string) => api.get(`/administradores/${cpf}`),
+};
 
 // Administradores
 export const administradoresService = {

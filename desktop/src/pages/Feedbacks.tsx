@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { feedbackService } from '../services/api'
-import { useAdmin } from '../admin'
+import { useAuth } from '../auth'
 
 interface FeedbackItem {
   id: number
@@ -12,7 +12,8 @@ interface FeedbackItem {
 }
 
 export default function Feedbacks() {
-  const { cpf } = useAdmin()
+  const { admin } = useAuth()
+  const cpf = admin?.cpf ?? ''
   const [itens, setItens] = useState<FeedbackItem[]>([])
   const [erro, setErro] = useState('')
   const [respostas, setRespostas] = useState<Record<number, string>>({})

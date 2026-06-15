@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { agendamentosService } from '../services/api'
-import { useAdmin } from '../admin'
+import { useAuth } from '../auth'
 
 // Estrutura retornada por GET /agendamentos (com os relacionamentos incluidos)
 interface AgendamentoItem {
@@ -21,7 +21,8 @@ const STATUS_LABEL: Record<string, string> = {
 }
 
 export default function Agendamentos() {
-  const { cpf } = useAdmin()
+  const { admin } = useAuth()
+  const cpf = admin?.cpf ?? ''
   const [itens, setItens] = useState<AgendamentoItem[]>([])
   const [erro, setErro] = useState('')
   const [carregando, setCarregando] = useState(true)

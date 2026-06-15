@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { servicosService } from '../services/api'
-import { useAdmin } from '../admin'
+import { useAuth } from '../auth'
 import { Servico } from '../types'
 
 export default function Servicos() {
-  const { cpf } = useAdmin()
+  const { admin } = useAuth()
+  const cpf = admin?.cpf ?? ''
   const [itens, setItens] = useState<Servico[]>([])
   const [erro, setErro] = useState('')
   const [form, setForm] = useState({ nome: '', descricao: '', preco: '', duracao: '' })

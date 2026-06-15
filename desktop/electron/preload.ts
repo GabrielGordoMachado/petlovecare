@@ -22,3 +22,10 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // You can expose other APTs you need here.
   // ...
 })
+
+// --------- Armazenamento persistente (electron-store via IPC) ---------
+contextBridge.exposeInMainWorld('store', {
+  get: (key: string) => ipcRenderer.invoke('store:get', key),
+  set: (key: string, value: unknown) => ipcRenderer.invoke('store:set', key, value),
+  delete: (key: string) => ipcRenderer.invoke('store:delete', key),
+})
