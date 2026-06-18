@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { AgendamentosService } from './agendamentos.service';
+import { AtualizarStatusDto } from './dto/atualizar-status.dto';
 
 @Controller('agendamentos')
 export class AgendamentosController {
@@ -32,10 +33,7 @@ export class AgendamentosController {
   }
 
   @Put(':id/status')
-  atualizarStatus(@Param('id') id: string, @Body() body: {
-    status: string;
-    admin_cpf?: string;
-  }) {
+  atualizarStatus(@Param('id') id: string, @Body() body: AtualizarStatusDto) {
     return this.agendamentosService.atualizarStatus(Number(id), body.status, body.admin_cpf);
   }
 
