@@ -27,9 +27,15 @@ export default function Home() {
   const [servicos, setServicos] = useState<Servico[]>([]);
 
   useEffect(() => {
+    // Serviços que não aparecem na vitrine no momento (ex.: não oferecidos agora).
+    const ocultos = ['vacinação'];
     servicosService
       .listar()
-      .then(({ data }) => setServicos(data))
+      .then(({ data }) =>
+        setServicos(
+          data.filter((s) => !ocultos.includes(s.nome.toLowerCase())),
+        ),
+      )
       .catch(() => setServicos([])); // sem serviços ainda → seção mostra aviso
   }, []);
 
