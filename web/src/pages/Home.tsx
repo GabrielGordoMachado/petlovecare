@@ -49,7 +49,11 @@ export default function Home() {
               seguras e acolhedoras para o seu pet.
             </p>
           </div>
-          <div className="hero-img" aria-hidden="true" />
+          <img
+            className="hero-img"
+            src="/img/hero.jpg"
+            alt="Cão feliz e bem cuidado"
+          />
         </div>
       </section>
 
