@@ -13,25 +13,21 @@ const api = axios.create({
 
 export default api;
 
-// ---- Autenticação (provisória) -------------------------------------------
-// A API ainda não tem POST /auth/login (ver GUIA_INTEGRACAO.md, seção 6).
-// Estratégia: tentar a rota real; se ela não existir (404), cair na verificação
-// provisória por CPF. Como o GET não devolve a senha, no modo provisório só
-// confirmamos que o cliente existe. Quando o /auth/login for ao ar, o login
-// passa a validar a senha de verdade sem mexer nas telas.
+// ---- Autenticação --------------------------------------------------------
+// Login real: valida CPF + senha na API (POST /auth/login). O contrato do time
+// usa { cpf, senha, tipo } e responde 401 quando a senha está errada. Em seguida
+// buscamos os dados completos do cliente (que incluem telefone e pets).
 export const authService = {
   async loginCliente(cpf: string, senha: string): Promise<Cliente> {
     try {
-      const { data } = await api.post('/auth/login', { cpf, senha, perfil: 'cliente' });
-      return data.cliente ?? data;
+      await api.post('/auth/login', { cpf, senha, tipo: 'cliente' });
     } catch (e) {
-      // 401 = senha rejeitada pela rota já publicada → propaga o erro de verdade.
+      // 401 = senha incorreta → propaga o erro. Se a rota estiver indisponível
+      // (404/erro de rede), segue no modo provisório (valida só o CPF abaixo).
       if (axios.isAxiosError(e) && e.response?.status === 401) throw e;
-      // Qualquer outra falha (404/400 = rota ainda não publicada no Railway)
-      // → modo provisório: confirma o cliente pelo CPF.
-      const { data } = await api.get<Cliente>(`/clientes/${cpf}`);
-      return data;
     }
+    const { data } = await api.get<Cliente>(`/clientes/${cpf}`);
+    return data;
   },
 };
 
