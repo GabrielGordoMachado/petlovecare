@@ -9,13 +9,13 @@ const api = axios.create({
 
 export default api;
 
-// Autenticação (provisória)
-// A API ainda não tem POST /auth/login. Enquanto isso, o login do admin é feito
-// buscando o administrador por CPF. Obs.: GET /administradores/:cpf NÃO retorna a
-// senha (a API a oculta), então a verificação real de senha depende da rota
-// POST /auth/login (TODO do Gabriel — ver GUIA_INTEGRACAO.md, seção 6).
+// Autenticação
+// Login real do admin: valida CPF + senha em POST /auth/login com tipo
+// 'administrador'. A API responde 401 quando CPF/senha não conferem e devolve
+// { cpf, nome, email, tipo } no sucesso.
 export const authService = {
-  loginAdmin: (cpf: string) => api.get(`/administradores/${cpf}`),
+  loginAdmin: (cpf: string, senha: string) =>
+    api.post('/auth/login', { cpf, senha, tipo: 'administrador' }),
 };
 
 // Administradores

@@ -62,14 +62,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (cpf.length !== 11) throw new Error('CPF deve ter 11 dígitos.')
     if (!senha) throw new Error('Informe a senha.')
 
-    // Provisório: a API não expõe a senha, então só validamos a existência do
-    // admin. A verificação real de senha depende de POST /auth/login (TODO).
+    // Login real: valida CPF + senha via POST /auth/login (tipo administrador).
+    // A API usa mensagem genérica (não revela se errou o CPF ou a senha).
     let logado: Admin
     try {
-      const { data } = await authService.loginAdmin(cpf)
+      const { data } = await authService.loginAdmin(cpf, senha)
       logado = { cpf: data.cpf, nome: data.nome }
     } catch (e: any) {
-      if (e?.response?.status === 404) throw new Error('CPF não encontrado.')
+      if (e?.response?.status === 401) throw new Error('CPF ou senha inválidos.')
       throw new Error('Não foi possível entrar. Verifique a conexão com a API.')
     }
 
