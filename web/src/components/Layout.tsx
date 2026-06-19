@@ -1,7 +1,7 @@
 import { NavLink, Link, Outlet, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../auth';
-import logo from '../assets/Logo1.svg';
+import logo from '../assets/Logo2.svg';
 
 /*
  * Cabeçalho + rodapé do site do cliente (mockups Desk1–4).
