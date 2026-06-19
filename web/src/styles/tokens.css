@@ -1,46 +1,49 @@
 /*
- * Design tokens extraídos dos mockups do PetLoveCare (identidadeVisual/).
- * Toda cor, tamanho de fonte e espaçamento sai daqui — tema num só lugar.
+ * Design tokens — realinhados ao Design System oficial
+ * (identidadeVisual/PetLove Care Design System/tokens/*).
+ * Os NOMES das variáveis foram mantidos (app.css continua funcionando);
+ * só os VALORES passaram a vir do DS. Tema num só lugar.
  */
 
 :root {
-  /* ---- Cores ---- */
-  /* Laranja/coral = ação. Navy = estrutura e texto. Teal = destaque pontual. */
-  --cor-primaria: #f0894e;
-  --cor-primaria-hover: #dc7838;
-  --cor-secundaria: #27b7a9;
-  --cor-escura: #1c2a3f;
-  --cor-escura-suave: #33415a;
+  /* ---- Cores (DS: navy / coral / teal) ---- */
+  /* Coral = ação. Navy = estrutura e texto. Teal = marca secundária/links. */
+  --cor-primaria: #ff7f50;        /* DS --coral */
+  --cor-primaria-hover: #ed6a3a;  /* DS --coral-dark */
+  --cor-secundaria: #2c6e8f;      /* DS --teal */
+  --cor-secundaria-bright: #2ec4b6; /* DS --teal-bright (régua/acento) */
+  --cor-escura: #1e293b;          /* DS --navy */
+  --cor-escura-suave: #162032;    /* DS --navy-deep */
 
-  --cor-fundo: #ffffff;
-  --cor-fundo-alt: #f6f8fa;
-  --cor-superficie-escura: #1c2a3f;
+  --cor-fundo: #ffffff;           /* DS --white */
+  --cor-fundo-alt: #f8fafc;       /* DS --bg-light */
+  --cor-superficie-escura: #1e293b; /* DS --navy */
 
-  --cor-texto: #1c2a3f;
-  --cor-texto-suave: #5a6b80;
-  --cor-texto-claro: #ffffff;
-  --cor-borda: #e4e8ec;
+  --cor-texto: #1e293b;           /* DS --text */
+  --cor-texto-suave: #64748b;     /* DS --muted */
+  --cor-texto-claro: #f8fafc;     /* DS --text-on-dark */
+  --cor-borda: #e2e8f0;           /* DS --line */
 
-  /* Inputs dos popups (fundo cinza claro sobre navy — ver mockups PopUp). */
+  /* Inputs (fundo cinza claro — DS --input). */
   --cor-input: #d9d9d9;
-  --cor-input-texto: #1c2a3f;
+  --cor-input-texto: #1e293b;
 
-  /* Status — para validação de formulário e avisos. */
-  --cor-sucesso: #2e9e6b;
-  --cor-erro: #d6453d;
-  --cor-aviso: #e0922f;
+  /* Status — alinhado às cores de status/badge do DS. */
+  --cor-sucesso: #1a7f37;         /* DS --status-finalizado-fg */
+  --cor-erro: #cf4040;            /* DS --danger */
+  --cor-aviso: #9a6700;           /* DS --status-andamento-fg */
 
-  /* ---- Tipografia ---- */
+  /* ---- Tipografia (DS: Poppins display + Nunito body) ---- */
   --fonte-titulo: 'Poppins', system-ui, sans-serif;
-  --fonte-corpo: 'Inter', system-ui, sans-serif;
+  --fonte-corpo: 'Nunito', system-ui, sans-serif;
 
-  --fonte-display: 4rem; /* 64px — herói */
-  --fonte-h1: 2.5rem; /* 40px */
-  --fonte-h2: 1.75rem; /* 28px */
-  --fonte-h3: 1.25rem; /* 20px */
-  --fonte-corpo-tam: 1rem; /* 16px */
-  --fonte-pequena: 0.875rem; /* 14px */
-  --fonte-micro: 0.75rem; /* 12px */
+  --fonte-display: 8rem;   /* 128px — herói (DS --fs-display) */
+  --fonte-h1: 2.75rem;     /* 44px (DS --fs-h1) */
+  --fonte-h2: 2rem;        /* 32px (DS --fs-h2) */
+  --fonte-h3: 1.625rem;    /* 26px (DS --fs-h3) */
+  --fonte-corpo-tam: 1rem; /* 16px (DS --fs-body) */
+  --fonte-pequena: 0.875rem; /* 14px (DS --fs-sm) */
+  --fonte-micro: 0.75rem;  /* 12px (DS --fs-xs) */
 
   --peso-regular: 400;
   --peso-medio: 500;
@@ -48,26 +51,27 @@
   --peso-bold: 700;
   --peso-black: 800;
 
-  /* ---- Espaçamento (escala base-4) ---- */
-  --esp-1: 0.25rem;
-  --esp-2: 0.5rem;
-  --esp-3: 0.75rem;
-  --esp-4: 1rem;
-  --esp-5: 1.5rem;
-  --esp-6: 2rem;
-  --esp-7: 3rem;
-  --esp-8: 4rem;
-  --esp-9: 6rem;
+  /* ---- Espaçamento (escala base-4, DS --space-*) ---- */
+  --esp-1: 0.25rem; /* 4px */
+  --esp-2: 0.5rem;  /* 8px */
+  --esp-3: 0.75rem; /* 12px */
+  --esp-4: 1rem;    /* 16px */
+  --esp-5: 1.5rem;  /* 24px */
+  --esp-6: 2rem;    /* 32px */
+  --esp-7: 3rem;    /* 48px */
+  --esp-8: 4rem;    /* 64px */
+  --esp-9: 6rem;    /* 96px */
 
-  /* ---- Raios ---- */
-  --raio-sm: 4px;
-  --raio-md: 8px;
-  --raio-lg: 12px;
+  /* ---- Raios (DS --radius-*) ---- */
+  --raio-sm: 8px;   /* DS --radius-sm */
+  --raio-md: 12px;  /* DS --radius */
+  --raio-lg: 18px;  /* DS --radius-lg */
+  --raio-pill: 999px; /* DS --radius-pill */
 
-  /* ---- Sombras ---- */
-  --sombra-sm: 0 1px 3px rgba(28, 42, 63, 0.08);
-  --sombra-md: 0 4px 12px rgba(28, 42, 63, 0.12);
+  /* ---- Sombras (DS --shadow-*) ---- */
+  --sombra-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
+  --sombra-md: 0 10px 30px rgba(15, 23, 42, 0.12);
 
   /* ---- Layout ---- */
-  --largura-conteudo: 1120px;
+  --largura-conteudo: 1200px; /* DS --container */
 }
