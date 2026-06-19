@@ -52,7 +52,7 @@ export default function Home() {
           <img
             className="hero-img"
             src="/img/hero.jpg"
-            alt="Cão feliz e bem cuidado"
+            alt="Dois cães correndo felizes ao pôr do sol"
           />
         </div>
       </section>
