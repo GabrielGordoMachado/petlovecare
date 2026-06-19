@@ -232,9 +232,23 @@
   background-color: var(--cor-primaria);
   color: var(--cor-texto-claro);
   border-radius: var(--raio-md);
-  padding: var(--esp-6);
-  text-align: center;
+  overflow: hidden; /* a imagem respeita os cantos arredondados */
   box-shadow: var(--sombra-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Imagem no topo do card de serviço (bundlada em public/img). */
+.servico-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.servico-corpo {
+  padding: var(--esp-5);
+  text-align: center;
 }
 
 .servico-card h3 {

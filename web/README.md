@@ -26,6 +26,18 @@ VITE_API_URL=http://localhost:3000
 | `npm test` | Testes (Vitest) |
 | `npm run lint` | ESLint |
 | `npm run format` | Prettier |
+| `npm run deploy` | Build + publica no Firebase Hosting |
+
+## Deploy (Firebase Hosting)
+
+O projeto já vem configurado (`firebase.json` com rewrite de SPA + `firebase-tools`).
+Passo a passo completo em [DEPLOY_FIREBASE.md](DEPLOY_FIREBASE.md). Resumo:
+
+```bash
+npx firebase login        # entra na conta Google
+npx firebase use --add    # escolhe o seu projeto Firebase
+npm run deploy            # build + publica
+```
 
 ## Estrutura
 

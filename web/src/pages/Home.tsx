@@ -5,6 +5,21 @@ import { servicosService } from '../services/api';
 import type { Servico } from '../types';
 
 /*
+ * Escolhe a imagem do card conforme o nome do serviço. As imagens ficam em
+ * public/img/ (bundladas no projeto, sem depender de URL externa). Se o nome
+ * não casar com nenhum caso, usa uma imagem padrão.
+ */
+function imagemServico(nome: string): string {
+  const n = nome.toLowerCase();
+  if (n.includes('banho') && n.includes('tosa')) return '/img/servico-banho-tosa.jpg';
+  if (n.includes('banho')) return '/img/servico-banho.jpg';
+  if (n.includes('tosa')) return '/img/servico-tosa.jpg';
+  if (n.includes('consulta')) return '/img/servico-consulta.jpg';
+  if (n.includes('vacina')) return '/img/servico-vacinacao.jpg';
+  return '/img/servico-padrao.jpg';
+}
+
+/*
  * Página inicial pública (mockups Desk1–4): herói, principais serviços,
  * "sobre nós" e contato. Os serviços vêm da API (GET /servicos).
  */
@@ -57,11 +72,26 @@ export default function Home() {
           <div className="servicos-grid">
             {servicos.map((s) => (
               <article key={s.id} className="servico-card">
-                <h3>{s.nome}</h3>
-                <p>{s.descricao ?? 'Serviço com foco no conforto e no cuidado do seu pet.'}</p>
-                <p className="preco">
-                  R$ {Number(s.preco).toFixed(2)} · {s.duracao} min
-                </p>
+                <img
+                  className="servico-img"
+                  src={imagemServico(s.nome)}
+                  alt={`Serviço: ${s.nome}`}
+                  loading="lazy"
+                  onError={(e) => {
+                    // Defesa: se a imagem não carregar, cai na padrão.
+                    e.currentTarget.src = '/img/servico-padrao.jpg';
+                  }}
+                />
+                <div className="servico-corpo">
+                  <h3>{s.nome}</h3>
+                  <p>
+                    {s.descricao ??
+                      'Serviço com foco no conforto e no cuidado do seu pet.'}
+                  </p>
+                  <p className="preco">
+                    R$ {Number(s.preco).toFixed(2)} · {s.duracao} min
+                  </p>
+                </div>
               </article>
             ))}
           </div>

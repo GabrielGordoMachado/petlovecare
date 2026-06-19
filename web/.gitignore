@@ -9,6 +9,11 @@ dist-ssr
 vite.config.js
 vite.config.d.ts
 
+# Firebase (cache e logs locais; o firebase.json e o .firebaserc ficam versionados)
+.firebase/
+firebase-debug.log
+.firebase-debug.log
+
 # Editor
 .vscode/*
 !.vscode/extensions.json
