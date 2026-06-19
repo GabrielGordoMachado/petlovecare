@@ -1,0 +1,62 @@
+/*
+ * Reset enxuto: zera margens/padding herdados, normaliza box-sizing
+ * e define a base tipográfica. Só o suficiente para um estado previsível.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  font-size: var(--fonte-corpo-tam);
+  line-height: 1.5;
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo-alt);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fonte-titulo);
+  line-height: 1.2;
+  color: var(--cor-escura);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Foco visível para acessibilidade básica. */
+:focus-visible {
+  outline: 2px solid var(--cor-secundaria);
+  outline-offset: 2px;
+}
