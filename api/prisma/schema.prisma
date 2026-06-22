@@ -23,9 +23,9 @@ model Cliente {
   email    String @unique @db.VarChar(100)
   senha    String @db.VarChar(255)
 
-  pets          Pet[]
-  agendamentos  Agendamento[]
-  feedbacks     Feedback[]
+  pets         Pet[]
+  agendamentos Agendamento[]
+  feedbacks    Feedback[]
 
   @@map("cliente")
 }
@@ -37,9 +37,9 @@ model Administrador {
   email    String @unique @db.VarChar(100)
   senha    String @db.VarChar(255)
 
-  agendamentos  Agendamento[]  @relation("AdminAgendamento")
-  servicos      Servico[]
-  feedbacks     Feedback[]     @relation("AdminFeedback")
+  agendamentos Agendamento[] @relation("AdminAgendamento")
+  servicos     Servico[]
+  feedbacks    Feedback[]    @relation("AdminFeedback")
 
   @@map("administrador")
 }
@@ -49,13 +49,13 @@ model Administrador {
 // ─────────────────────────────────────────────
 
 model Pet {
-  id           Int    @id @default(autoincrement())
-  cliente_cpf  String @db.VarChar(11)
-  nomePet      String @db.VarChar(50)
-  especie      String @db.VarChar(30)
-  raca         String @db.VarChar(50)
-  idade        Int
-  observacoes  String? @db.Text
+  id          Int     @id @default(autoincrement())
+  cliente_cpf String  @db.VarChar(11)
+  nomePet     String  @db.VarChar(50)
+  especie     String  @db.VarChar(30)
+  raca        String  @db.VarChar(50)
+  idade       Int
+  observacoes String? @db.Text
 
   cliente      Cliente       @relation(fields: [cliente_cpf], references: [cpf])
   agendamentos Agendamento[]
@@ -68,15 +68,15 @@ model Pet {
 // ─────────────────────────────────────────────
 
 model Servico {
-  id          Int     @id @default(autoincrement())
-  admin_cpf   String  @db.VarChar(11)
-  nome        String  @db.VarChar(100)
-  descricao   String? @db.Text
-  preco       Decimal @db.Decimal(10, 2)
-  duracao     Int     // duração em minutos
+  id        Int     @id @default(autoincrement())
+  admin_cpf String  @db.VarChar(11)
+  nome      String  @db.VarChar(100)
+  descricao String? @db.Text
+  preco     Decimal @db.Decimal(10, 2)
+  duracao   Int // duração em minutos
 
-  administrador       Administrador        @relation(fields: [admin_cpf], references: [cpf])
-  agendamentoServico  AgendamentoServico[]
+  administrador      Administrador        @relation(fields: [admin_cpf], references: [cpf])
+  agendamentoServico AgendamentoServico[]
 
   @@map("servico")
 }
@@ -93,13 +93,13 @@ enum StatusAgendamento {
 }
 
 model Agendamento {
-  id           Int                @id @default(autoincrement())
-  cliente_cpf  String             @db.VarChar(11)
-  pet_id       Int
-  admin_cpf    String?            @db.VarChar(11) // nullable: preenchido ao aprovar/recusar
-  data_hora    DateTime
-  status       StatusAgendamento  @default(agendado)
-  observacao   String?            @db.Text
+  id          Int               @id @default(autoincrement())
+  cliente_cpf String            @db.VarChar(11)
+  pet_id      Int
+  admin_cpf   String?           @db.VarChar(11) // nullable: preenchido ao aprovar/recusar
+  data_hora   DateTime
+  status      StatusAgendamento @default(agendado)
+  observacao  String?           @db.Text
 
   cliente            Cliente              @relation(fields: [cliente_cpf], references: [cpf])
   pet                Pet                  @relation(fields: [pet_id], references: [id])
@@ -135,7 +135,7 @@ model Feedback {
   agendamento_id Int      @unique // 1 feedback por agendamento
   cliente_cpf    String   @db.VarChar(11)
   admin_cpf      String?  @db.VarChar(11) // nullable: preenchido ao responder
-  nota           Int      // 1 a 5
+  nota           Int // 1 a 5
   comentario     String   @db.Text
   data           DateTime @default(now())
   resposta       String?  @db.Text
