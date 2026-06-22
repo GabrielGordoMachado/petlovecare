@@ -96,6 +96,18 @@ export class AgendamentosService {
 
   async atualizarStatus(id: number, status: string, admin_cpf?: string) {
     await this.buscarPorId(id);
+    // Valida o admin antes do update: um admin_cpf inexistente estouraria a FK
+    // como 500 generico (ex.: sessao antiga/de outro ambiente no app).
+    if (admin_cpf) {
+      const admin = await this.prisma.administrador.findUnique({
+        where: { cpf: admin_cpf },
+      });
+      if (!admin) {
+        throw new BadRequestException(
+          'Administrador nao encontrado para o admin_cpf informado.',
+        );
+      }
+    }
     return this.prisma.agendamento.update({
       where: { id },
       data: { status: status as any, admin_cpf },
