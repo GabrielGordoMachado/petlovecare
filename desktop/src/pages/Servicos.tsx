@@ -50,8 +50,9 @@ export default function Servicos() {
     try {
       await servicosService.excluir(id)
       await carregar()
-    } catch {
-      alert('Erro ao excluir.')
+    } catch (e: any) {
+      // Mostra a mensagem real da API (ex.: serviço vinculado a agendamentos).
+      alert(e?.response?.data?.message ?? 'Erro ao excluir.')
     }
   }
 

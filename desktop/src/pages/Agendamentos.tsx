@@ -52,8 +52,9 @@ export default function Agendamentos() {
     try {
       await agendamentosService.atualizarStatus(id, status, cpf)
       await carregar()
-    } catch {
-      alert('Erro ao atualizar o status.')
+    } catch (e: any) {
+      // Mostra a mensagem real da API (ex.: admin_cpf inexistente na base).
+      alert(e?.response?.data?.message ?? 'Erro ao atualizar o status.')
     }
   }
 
