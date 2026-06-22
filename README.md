@@ -1,8 +1,8 @@
 # PetLoveCare
 
 #### Disciplina: APSOO — Análise e Projeto de Sistemas Orientados a Objetos
-#### Professor: <!-- preencher -->
-#### Participantes: Gabriel Gordo Machado, Sérgio <!-- sobrenome -->, Nahie <!-- sobrenome -->
+#### Professor: Rodrigo Funabashi Jorge
+#### Participantes: Gabriel Gordo Machado, Sérgio, Nahie, José
 
 > Projeto acadêmico de gestão para um pet shop, com **API** (NestJS) consumida por um
 > **app web** (tutores) e um **app desktop** (administradores).
