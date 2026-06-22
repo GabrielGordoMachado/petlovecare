@@ -20,7 +20,8 @@ export default function Login() {
   const [erro, setErro] = useState('');
   const [entrando, setEntrando] = useState(false);
 
-  const destino = (location.state as { de?: string } | null)?.de ?? '/';
+  const estado = location.state as { de?: string; backgroundLocation?: unknown } | null;
+  const destino = estado?.de ?? '/';
 
   async function aoEnviar(e: FormEvent) {
     e.preventDefault();
@@ -71,7 +72,12 @@ export default function Login() {
           {entrando ? 'Entrando…' : 'Entrar'}
         </button>
 
-        <Link to="/cadastro" className="link-suave" style={{ textAlign: 'center' }}>
+        <Link
+          to="/cadastro"
+          state={estado?.backgroundLocation ? { backgroundLocation: estado.backgroundLocation } : undefined}
+          className="link-suave"
+          style={{ textAlign: 'center' }}
+        >
           Não tem uma conta? Cadastre-se
         </Link>
         <button

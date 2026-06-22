@@ -37,7 +37,7 @@
   --fonte-titulo: 'Poppins', system-ui, sans-serif;
   --fonte-corpo: 'Nunito', system-ui, sans-serif;
 
-  --fonte-display: 8rem;   /* 128px — herói (DS --fs-display) */
+  --fonte-display: 6rem;   /* 128px — herói (DS --fs-display) */
   --fonte-h1: 2.75rem;     /* 44px (DS --fs-h1) */
   --fonte-h2: 2rem;        /* 32px (DS --fs-h2) */
   --fonte-h3: 1.625rem;    /* 26px (DS --fs-h3) */

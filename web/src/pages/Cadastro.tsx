@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import { useAuth } from '../auth';
@@ -14,8 +14,14 @@ import { validarEmail } from '../utils/email';
  */
 export default function Cadastro() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { registrarSessao } = useAuth();
   const { toast } = useUI();
+
+  // Quando o cadastro abre como popup sobre uma página, guarda o fundo para
+  // repassá-lo ao voltar para o login (senão o login abriria em tela cheia).
+  const fundo = (location.state as { backgroundLocation?: unknown } | null)
+    ?.backgroundLocation;
 
   const [form, setForm] = useState({
     nome: '',
@@ -145,7 +151,12 @@ export default function Cadastro() {
           {salvando ? 'Salvando…' : 'Confirmar'}
         </button>
 
-        <Link to="/login" className="link-suave" style={{ textAlign: 'center' }}>
+        <Link
+          to="/login"
+          state={fundo ? { backgroundLocation: fundo } : undefined}
+          className="link-suave"
+          style={{ textAlign: 'center' }}
+        >
           Já tem conta? Entrar
         </Link>
       </form>

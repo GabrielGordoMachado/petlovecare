@@ -14,7 +14,16 @@ export default function RotaProtegida({ children }: { children: ReactNode }) {
   if (carregando) return <p className="carregando">Carregando…</p>;
 
   if (!cliente) {
-    return <Navigate to="/login" replace state={{ de: location.pathname }} />;
+    // Abre o login por cima da Home (a rota protegida em si não renderiza sem
+    // login — usá-la como fundo recairia neste mesmo redirect). `de` guarda o
+    // destino pretendido para voltar após entrar.
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ de: location.pathname, backgroundLocation: { pathname: '/' } }}
+      />
+    );
   }
 
   return <>{children}</>;

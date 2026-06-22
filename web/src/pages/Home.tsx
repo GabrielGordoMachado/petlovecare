@@ -1,8 +1,63 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Carrossel } from '../components/Carrossel';
+import { Estatisticas } from '../components/Estatisticas';
+import { PetFeedbackCard } from '../components/feedback/PetFeedbackCard';
 import { servicosService } from '../services/api';
 import type { Servico } from '../types';
+
+/*
+ * Avaliações em destaque na seção "sobre nós". Estáticas por ora (mockup);
+ * quando houver endpoint de avaliações, basta trocar por dados da API.
+ */
+const avaliacoes = [
+  {
+    photo: '/img/servico-banho.jpg',
+    petName: 'Mia',
+    tutor: 'Ana Souza',
+    rating: 5,
+    service: 'Banho',
+    date: '18 jun',
+    comment: 'Atendimento maravilhoso, a Mia saiu cheirosa e tranquila!',
+  },
+  {
+    photo: '/img/servico-tosa.jpg',
+    petName: 'Thor',
+    tutor: 'Bruno Lima',
+    rating: 5,
+    service: 'Tosa',
+    date: '12 jun',
+    comment: 'Equipe super atenciosa e cuidadosa. O Thor adorou e voltou lindo.',
+  },
+  {
+    photo: '/img/servico-consulta.jpg',
+    petName: 'Luna',
+    tutor: 'Carla Dias',
+    rating: 4.5,
+    service: 'Consulta',
+    date: '05 jun',
+    comment: 'Profissionais excelentes, explicaram tudo com calma. Recomendo demais!',
+  },
+  {
+    photo: '/img/servico-banho-tosa.jpg',
+    petName: 'Bidu',
+    tutor: 'Diego Reis',
+    rating: 5,
+    service: 'Banho e Tosa',
+    date: '28 mai',
+    comment: 'Agendamento fácil pelo site e o Bidu ficou impecável. Voltaremos sempre!',
+  },
+  {
+    photo: '/img/servico-tosa.jpg',
+    petName: 'Nina',
+    tutor: 'Elaine Castro',
+    rating: 5,
+    service: 'Tosa',
+    date: '20 mai',
+    comment: 'Carinho de verdade com os animais. A Nina é tímida e se sentiu segura.',
+  },
+];
 
 /*
  * Escolhe a imagem do card conforme o nome do serviço. As imagens ficam em
@@ -14,8 +69,6 @@ function imagemServico(nome: string): string {
   if (n.includes('banho') && n.includes('tosa')) return '/img/servico-banho-tosa.jpg';
   if (n.includes('banho')) return '/img/servico-banho.jpg';
   if (n.includes('tosa')) return '/img/servico-tosa.jpg';
-  if (n.includes('consulta')) return '/img/servico-consulta.jpg';
-  if (n.includes('vacina')) return '/img/servico-vacinacao.jpg';
   return '/img/servico-padrao.jpg';
 }
 
@@ -130,20 +183,12 @@ export default function Home() {
             lugar. Criamos uma solução que ajuda a organizar atendimentos, agilizar
             processos e manter o foco no que realmente importa: o bem-estar dos pets.
           </p>
-          <div className="stats">
-            <div className="stat">
-              <strong>+500</strong>
-              <span>Gatos felizes</span>
-            </div>
-            <div className="stat">
-              <strong>+800</strong>
-              <span>Super cachorros</span>
-            </div>
-            <div className="stat">
-              <strong>+50</strong>
-              <span>Certificados</span>
-            </div>
-          </div>
+          <Carrossel ariaLabel="Avaliações de tutores">
+            {avaliacoes.map((a) => (
+              <PetFeedbackCard key={a.petName} photoAspect="4/3" {...a} />
+            ))}
+          </Carrossel>
+          <Estatisticas />
         </div>
       </section>
 
