@@ -1,0 +1,46 @@
+/* ════════════════════════════════════════════════════════════════
+   PetLove Care · Color tokens
+   Source of truth: desktop/src/index.css (codebase) + Figma palette.
+   ════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Brand palette ── */
+  --navy:        #1e293b;  /* primary dark — text, footers, dark surfaces */
+  --navy-deep:   #162032;  /* deepest navy — gradient bottoms, splash */
+  --coral:       #ff7f50;  /* primary action — buttons, highlights */
+  --coral-dark:  #ed6a3a;  /* coral hover/press */
+  --teal:        #2c6e8f;  /* secondary brand — "CARE", links, secondary btn */
+  --teal-bright: #2ec4b6;  /* bright accent — section-header rule, ticks */
+
+  /* ── Neutral / surface ── */
+  --white:       #ffffff;
+  --bg-light:    #f8fafc;  /* general light page background (slate-50) */
+  --surface:     #f5f5f5;  /* card / panel surface */
+  --input:       #d9d9d9;  /* form field fill (brand default) */
+  --line:        #e2e8f0;  /* hairline borders / table rules (slate-200) */
+
+  /* ── Text ── */
+  --text:        #1e293b;  /* body + headings on light */
+  --text-on-dark:#f8fafc;  /* text on navy */
+  --muted:       #64748b;  /* secondary text, captions (slate-500) */
+  --muted-on-dark: rgba(255,255,255,0.7);
+
+  /* ── Status / badge ── */
+  --status-agendado-bg:     #ddf4ff;  --status-agendado-fg:     #0969da;
+  --status-andamento-bg:    #fff3c4;  --status-andamento-fg:    #9a6700;
+  --status-finalizado-bg:   #dafbe1;  --status-finalizado-fg:   #1a7f37;
+  --status-cancelado-bg:    #ffe3e0;  --status-cancelado-fg:    #cf222e;
+  --danger:      #cf4040;  /* destructive buttons */
+  --star:        #e0a72c;  /* feedback rating stars */
+
+  /* ── Semantic aliases ── */
+  --color-action:        var(--coral);
+  --color-action-hover:  var(--coral-dark);
+  --color-link:          var(--teal);
+  --surface-card:        var(--white);
+  --surface-page:        var(--bg-light);
+  --surface-dark:        var(--navy);
+  --text-body:           var(--text);
+  --text-heading:        var(--navy);
+  --text-link:           var(--teal);
+  --border-subtle:       var(--line);
+}

@@ -1,0 +1,48 @@
+<!-- @dsCard group="Components" viewport="700x420" name="Brand — Logo & Section Header" subtitle="Logo lockups (color/white) and the navy section band" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin: 0; padding: 0; background: var(--bg-light); font-family: var(--font-body); }
+  .pad { padding: 24px; }
+  .lbl { font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+  .logos { display: flex; align-items: flex-end; gap: 36px; flex-wrap: wrap; }
+  .onnavy { background: var(--navy); border-radius: 12px; padding: 22px 28px; display: flex; align-items: flex-end; gap: 36px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { Logo, SectionHeader } = window.PetLoveCareDesignSystem_7829c3;
+    function Demo() {
+      return (
+        <div>
+          <div className="pad">
+            <p className="lbl">Logo — color (light bg)</p>
+            <div className="logos">
+              <Logo variant="lockup" theme="color" height={104} />
+              <Logo variant="mark" theme="color" height={68} />
+              <Logo variant="wordmark" theme="color" height={40} />
+            </div>
+            <p className="lbl" style={{ marginTop: '20px' }}>Logo — white (dark bg)</p>
+            <div className="onnavy">
+              <Logo variant="lockup" theme="white" height={92} />
+              <Logo variant="mark" theme="white" height={60} />
+              <Logo variant="wordmark" theme="white" height={36} />
+            </div>
+          </div>
+          <p className="lbl pad" style={{ paddingBottom: 0 }}>Section header</p>
+          <SectionHeader title="Sobre nós" subtitle="Unimos atendimento humanizado, cuidado profissional e praticidade para o bem-estar do seu pet." />
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

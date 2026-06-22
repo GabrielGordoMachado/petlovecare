@@ -1,0 +1,4 @@
+/* PetLove Care — Webfonts
+   Brand uses Poppins (display) + Nunito (body). Both are exact matches on
+   Google Fonts, so we load them from the Google CDN (no flagged substitution). */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
