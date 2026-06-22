@@ -12,8 +12,12 @@
 }
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background-color: var(--cor-fundo);
   border-bottom: 1px solid var(--cor-borda);
+  box-shadow: var(--sombra-sm);
 }
 
 .header-inner {
@@ -41,7 +45,7 @@
   font-weight: var(--peso-medio);
   color: var(--cor-texto);
   padding-bottom: 2px;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
 }
 
 .nav a:hover {
@@ -208,12 +212,14 @@
 .faixa-titulo {
   color: var(--cor-texto-claro);
   font-size: var(--fonte-h2);
-  border-left: 4px solid var(--cor-secundaria);
+  border-left: 4px solid var(--cor-secundaria-bright);
   padding-left: var(--esp-3);
 }
 
 .faixa-titulo .destaque {
-  color: var(--cor-secundaria);
+  /* Teal vivo (como na main): usa o token bright em vez do --cor-secundaria,
+     que o realinhamento ao DS escureceu. */
+  color: var(--cor-secundaria-bright);
 }
 
 .faixa-sub {
@@ -289,6 +295,156 @@
   color: var(--cor-texto-suave);
 }
 
+/* ---- Carrossel de avaliações (drag + snap) ---- */
+.carrossel {
+  margin-top: var(--esp-7);
+  /* Extrapola a coluna de texto (60ch) e ocupa a largura do conteúdo. Como é
+     mais largo que o pai (.sobre, 60ch), centraliza relativo ao centro do pai
+     — que já está centralizado na página — via left:50% + translateX(-50%). */
+  width: min(1080px, 92vw);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: left;
+}
+
+.carrossel-trilho {
+  position: relative;
+  display: flex;
+  gap: var(--esp-5);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* Folga lateral para o primeiro/último card alcançarem o centro (peek). */
+  padding-inline: calc(50% - clamp(260px, 78vw, 320px) / 2);
+  /* Folga vertical: o trilho tem overflow-y: hidden (imposto pelo overflow-x),
+     então a sombra do card ativo só desvanece sem ser cortada se couber dentro
+     deste padding. Precisa ser maior que o alcance da sombra. */
+  padding-block: var(--esp-7);
+  cursor: grab;
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+  /* Suaviza as bordas laterais: o overflow-x corta o conteúdo a seco na ponta
+     do trilho, o que deixa a sombra dos cards "peek" virar um relevo/linha. O
+     fade faz o conteúdo (e a sombra) desvanecer em vez de ser cortado. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--esp-6),
+    #000 calc(100% - var(--esp-6)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--esp-6),
+    #000 calc(100% - var(--esp-6)),
+    transparent 100%
+  );
+}
+.carrossel-trilho::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Durante o arraste do mouse: não brigar com o scrollLeft manual e dar o
+   feedback tátil de "agarrar". */
+.carrossel-trilho.arrastando {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.carrossel-item {
+  flex: 0 0 clamp(260px, 78vw, 320px);
+  scroll-snap-align: center;
+  /* Profundidade: cards laterais menores e mais apagados. */
+  transform: scale(0.9);
+  opacity: 0.78;
+  transition: transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease;
+  will-change: transform;
+}
+
+/* Card central em destaque: cresce e ganha sombra. A sombra é suave e cabe
+   dentro do padding-block do trilho, para não ser cortada na borda. */
+.carrossel-item.ativo {
+  transform: scale(1.04);
+  opacity: 1;
+  filter: drop-shadow(0 6px 10px rgba(15, 23, 42, 0.14));
+}
+
+/* Imagens não devem ser "arrastáveis" (fantasma do navegador). */
+.carrossel-item img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* ---- Setas de navegação (fora do trilho; só aparecem quando há para onde ir) ---- */
+.carrossel-seta {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  /* O quadrado se ajusta ao ícone + padding (sem tamanho fixo), então cresce
+     junto com o ícone e o place-items: center o mantém sempre centralizado. */
+  padding: 0.2em;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: var(--raio-sm);
+  background: var(--cor-primaria); /* laranja/coral padrão */
+  box-shadow: var(--sombra-sm);
+  cursor: pointer;
+  /* Saída do hover: volta suave, SEM overshoot (não encolhe além do normal). */
+  transition: transform 0.3s ease, background-color 0.2s ease;
+}
+/* Entrada do hover: aí sim o salto elástico. */
+.carrossel-seta:hover,
+.carrossel-seta:focus-visible {
+  transition: transform 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8),
+    background-color 0.2s ease;
+}
+.carrossel-seta.anterior {
+  left: 0;
+  transform: translate(-120%, -50%);
+}
+.carrossel-seta.proxima {
+  right: 0;
+  transform: translate(120%, -50%);
+}
+.carrossel-seta.anterior:hover,
+.carrossel-seta.anterior:focus-visible {
+  background: var(--cor-primaria-hover);
+  /* Salto só na posição (sem scale): quadrado e seta não mudam de tamanho. */
+  transform: translate(-150%, -50%);
+}
+.carrossel-seta.proxima:hover,
+.carrossel-seta.proxima:focus-visible {
+  background: var(--cor-primaria-hover);
+  transform: translate(150%, -50%);
+}
+
+/* Ícone: SVG arrow-up (svgrepo). Pintado de branco via currentColor e girado
+   para cada lado (o SVG aponta para cima por padrão). */
+.carrossel-seta .arrow-icon {
+  display: grid;
+  place-items: center;
+  width: 2.5em;
+  height: 2.5em;
+  color: #fff; /* pinta o SVG (fill: currentColor) */
+}
+.carrossel-seta .arrow-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.carrossel-seta.proxima .arrow-icon svg {
+  transform: rotate(90deg); /* ^ → > */
+}
+.carrossel-seta.anterior .arrow-icon svg {
+  transform: rotate(-90deg); /* ^ → < */
+}
+
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -304,6 +460,8 @@
 .stat strong {
   display: block;
   font-size: var(--fonte-h2);
+  /* Dígitos de largura fixa: o número não "treme" durante o count-up. */
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---- Contato (Desk4) ---- */
@@ -315,13 +473,17 @@
 
 /* ============ Popups (Login / Cadastro / Agendar / Pet) ============ */
 .popup {
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
   display: grid;
   place-items: center;
   padding: var(--esp-5);
-  background:
-    radial-gradient(1200px 600px at 50% -10%, #2b3c57, transparent),
-    var(--cor-superficie-escura);
+  overflow-y: auto;
+  /* Scrim translúcido e escuro (base: Overlay do Design System Web). */
+  background: rgba(10, 16, 28, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .popup-card {
@@ -680,5 +842,9 @@ textarea.input {
   }
   .stats {
     grid-template-columns: 1fr;
+  }
+  /* No toque o usuário arrasta o carrossel; setas fora da div vazariam a tela. */
+  .carrossel-seta {
+    display: none;
   }
 }

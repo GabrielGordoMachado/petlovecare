@@ -13,6 +13,9 @@
 
 html {
   font-size: 100%;
+  /* Compensa o header sticky (87px) ao rolar para âncoras (#servicos etc.). */
+  scroll-padding-top: 87px;
+  scroll-behavior: smooth;
 }
 
 body {
