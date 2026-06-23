@@ -1,0 +1,9 @@
+/* ════════════════════════════════════════════════════════════════
+   PetLove Care — Design System · global stylesheet
+   Consumers link THIS one file. It only @imports the token layers
+   and webfonts; component styling lives on the CSS custom properties.
+   ════════════════════════════════════════════════════════════════ */
+@import url('./tokens/fonts.css');
+@import url('./tokens/colors.css');
+@import url('./tokens/typography.css');
+@import url('./tokens/spacing.css');

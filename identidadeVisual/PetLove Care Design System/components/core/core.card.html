@@ -1,0 +1,69 @@
+<!-- @dsCard group="Components" viewport="700x540" name="Core — Buttons, Inputs, Badges" subtitle="Coral/teal buttons, filled & light fields, status pills" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin: 0; padding: 24px; background: var(--bg-light); font-family: var(--font-body); }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 22px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 560px; }
+  .lbl { font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .navy { background: var(--navy); border-radius: 12px; padding: 18px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { Button, Input, Select, Textarea, Badge } = window.PetLoveCareDesignSystem_7829c3;
+    function Demo() {
+      return (
+        <div>
+          <p className="lbl">Buttons</p>
+          <div className="row">
+            <Button variant="primary">AGENDE AGORA</Button>
+            <Button variant="secondary">Entrar</Button>
+            <Button variant="outline">Cadastrar</Button>
+            <Button variant="danger" size="sm">Recusar</Button>
+            <Button variant="link">Esqueceu a senha?</Button>
+            <Button variant="primary" disabled>Entrando…</Button>
+          </div>
+          <div className="row">
+            <Button variant="primary" size="sm">Small</Button>
+            <Button variant="primary" size="md">Medium</Button>
+            <Button variant="primary" size="lg">Large</Button>
+          </div>
+          <p className="lbl">Fields — light (admin)</p>
+          <div className="grid2" style={{ marginBottom: '22px' }}>
+            <Input label="Nome" placeholder="Nome do serviço" />
+            <Input label="Preço" type="number" placeholder="0,00" />
+            <Select label="Espécie" placeholder="Espécie" options={['Cachorro','Gato','Outro']} theme="light" />
+            <Textarea label="Observações" placeholder="Ex.: cão acima de 20kg" rows={2} />
+          </div>
+          <p className="lbl">Fields — filled (modal over navy)</p>
+          <div className="navy">
+            <div className="grid2">
+              <Input label="CPF" placeholder="000.000.000-00" theme="filled" />
+              <Select label="Escolha o pet" placeholder="Escolha o pet" options={['Rex','Mia','Thor']} theme="filled" />
+            </div>
+          </div>
+          <p className="lbl" style={{ marginTop: '22px' }}>Status badges</p>
+          <div className="row">
+            <Badge status="agendado" />
+            <Badge status="em_andamento" />
+            <Badge status="finalizado" />
+            <Badge status="cancelado" />
+            <Badge tone="coral">Novo</Badge>
+            <Badge tone="teal">Cliente</Badge>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

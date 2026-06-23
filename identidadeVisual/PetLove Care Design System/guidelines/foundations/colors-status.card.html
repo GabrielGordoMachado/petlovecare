@@ -1,0 +1,19 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Status colors" subtitle="Appointment lifecycle pill colors" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin:0; padding:22px 18px; background:#fff; font-family:var(--font-body); }
+  .row { display:flex; gap:16px; flex-wrap:wrap; }
+  .pill { padding:8px 16px; border-radius:999px; font-size:14px; font-weight:800; }
+  .nm { font-size:11px; color:var(--muted); margin-top:7px; text-align:center; }
+  .col { display:flex; flex-direction:column; align-items:center; }
+</style></head>
+<body>
+  <div class="row">
+    <div class="col"><span class="pill" style="background:var(--status-agendado-bg);color:var(--status-agendado-fg)">Agendado</span><div class="nm">agendado</div></div>
+    <div class="col"><span class="pill" style="background:var(--status-andamento-bg);color:var(--status-andamento-fg)">Em andamento</span><div class="nm">em_andamento</div></div>
+    <div class="col"><span class="pill" style="background:var(--status-finalizado-bg);color:var(--status-finalizado-fg)">Finalizado</span><div class="nm">finalizado</div></div>
+    <div class="col"><span class="pill" style="background:var(--status-cancelado-bg);color:var(--status-cancelado-fg)">Cancelado</span><div class="nm">cancelado</div></div>
+  </div>
+</body></html>

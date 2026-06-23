@@ -1,0 +1,55 @@
+<!-- @dsCard group="Web" viewport="1280x720" name="Web — Marketing site + scheduling" subtitle="Landing page with the client login → agendar modal flow" -->
+<!-- @startingPoint section="Web" subtitle="PetLove Care marketing landing page" viewport="1280x900" -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PetLove Care — Cuidado para seu melhor amigo</title>
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin: 0; background: var(--bg-light); font-family: var(--font-body); }
+  @media (max-width: 860px) {
+    section > div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel" src="sections.jsx"></script>
+  <script type="text/babel" src="modals.jsx"></script>
+  <script type="text/babel">
+    const { useState } = React;
+    function App() {
+      // modal ∈ null | 'login' | 'signup' | 'schedule' | 'pet' | 'done'
+      const [modal, setModal] = useState(null);
+      const open = () => setModal('login');
+      const close = () => setModal(null);
+      const go = (m) => setModal(m === 'done' ? 'done' : m);
+      const scrollTo = (id) => {
+        const map = { 'Serviços': 'servicos', 'Sobre nós': 'sobre', 'Contato': 'contato', 'Início': 'root' };
+        const el = document.getElementById(map[id]);
+        if (el) window.scrollTo({ top: id === 'Início' ? 0 : el.offsetTop - 10, behavior: 'smooth' });
+      };
+      return (
+        <div>
+          <Hero onAgendar={open} onNav={scrollTo} />
+          <Services />
+          <About />
+          <ContactFooter onAgendar={open} />
+          {modal === 'login' && <LoginModal onClose={close} go={go} />}
+          {modal === 'signup' && <SignupModal onClose={close} go={go} />}
+          {modal === 'schedule' && <ScheduleModal onClose={close} go={go} />}
+          {modal === 'pet' && <PetModal onClose={close} go={go} />}
+          {modal === 'done' && <DoneModal onClose={close} />}
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

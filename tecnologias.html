@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend PetLoveCare — Apresentação Técnica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --petrol:    #0e4d52;
+    --petrol-dk: #0a383c;
+    --teal:      #1c8a86;
+    --coral:     #e8674c;
+    --amber:     #f2a73b;
+    --cream:     #f6f3ec;
+    --paper:     #fffdf8;
+    --ink:       #1d2a2b;
+    --muted:     #5c6b6c;
+    --line:      #e2ddd1;
+    --code-bg:   #0d2528;
+    --code-ink:  #d7e8e6;
+    --radius:    14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 264px minmax(0, 1fr);
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 38px 26px;
+    background: var(--petrol);
+    color: #cfe3e2;
+  }
+  .brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.32rem;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .brand .paw { color: var(--amber); }
+  .brand-sub {
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 32px;
+  }
+  .toc { list-style: none; padding: 0; margin: 0; counter-reset: toc; }
+  .toc li { margin: 2px 0; }
+  .toc a {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 9px 12px;
+    border-radius: 9px;
+    color: #b9d3d2;
+    text-decoration: none;
+    font-size: .92rem;
+    transition: background .18s, color .18s;
+  }
+  .toc a:hover { background: rgba(255,255,255,.07); color: #fff; }
+  .toc a .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem;
+    color: var(--amber);
+    min-width: 18px;
+  }
+  .sidebar-foot {
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    font-size: .76rem;
+    color: #7fa6a4;
+    line-height: 1.5;
+  }
+
+  /* ---------- Content ---------- */
+  .content {
+    padding: 60px clamp(28px, 5vw, 76px) 100px;
+    background: var(--paper);
+    min-width: 0;
+  }
+
+  .hero {
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 34px;
+    margin-bottom: 14px;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    letter-spacing: -.02em;
+  }
+  .lede {
+    font-size: 1.06rem;
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+  .lede .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82rem;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 1px 7px;
+    color: var(--petrol);
+  }
+
+  section { padding-top: 48px; scroll-margin-top: 24px; }
+
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    letter-spacing: -.01em;
+    margin: 0 0 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  h2 .h-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: #fff;
+    background: var(--coral);
+    border-radius: 8px;
+    padding: 4px 11px;
+    font-weight: 700;
+  }
+  h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 28px 0 10px;
+    color: var(--petrol);
+  }
+
+  p { margin: 0 0 14px; }
+  a { color: var(--teal); }
+
+  ul { padding-left: 22px; margin: 0 0 16px; }
+  li { margin: 6px 0; }
+  li::marker { color: var(--coral); }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .86em;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 1px 6px;
+    color: var(--petrol-dk);
+  }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    overflow-x: auto;
+    margin: 18px 0 22px;
+    line-height: 1.55;
+    box-shadow: 0 10px 28px -16px rgba(14,77,82,.5);
+  }
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: .85rem;
+  }
+
+  /* Callout */
+  .note {
+    border-left: 4px solid var(--amber);
+    background: #fef6e7;
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: .95rem;
+  }
+  .note strong { color: var(--coral); }
+  .note .warn { font-weight: 700; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 18px 0 6px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .92rem;
+    min-width: 420px;
+  }
+  thead th {
+    background: var(--petrol);
+    color: #fff;
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    padding: 11px 16px;
+  }
+  thead th:first-child { border-radius: 9px 0 0 0; }
+  thead th:last-child  { border-radius: 0 9px 0 0; }
+  tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: var(--cream); }
+  tbody td:first-child { font-weight: 600; color: var(--petrol-dk); }
+  tbody code { font-size: .82em; }
+
+  /* Entity list cards */
+  .entities { list-style: none; padding: 0; display: grid; gap: 10px; }
+  .entities li {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 18px;
+    margin: 0;
+  }
+  .entities b { color: var(--petrol-dk); font-family: 'Space Grotesk', sans-serif; }
+
+  .enum-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 18px; }
+  .enum-chips span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8rem;
+    background: var(--petrol);
+    color: #d7eceb;
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+
+  /* App subsection cards */
+  .app-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 20px 0 8px;
+  }
+  .app-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--teal);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .app-card.desktop { border-top-color: var(--coral); }
+  .app-card h3 {
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .app-card .repo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .76rem;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+  .app-card ul { margin: 0; padding-left: 20px; }
+  .app-card li { font-size: .92rem; }
+  .audience {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--petrol-dk);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 12px;
+  }
+  @media (max-width: 720px) {
+    .app-grid { grid-template-columns: 1fr; }
+  }
+
+  footer.page-foot {
+    margin-top: 56px;
+    padding-top: 26px;
+    border-top: 2px solid var(--line);
+    font-size: .85rem;
+    color: var(--muted);
+  }
+
+  /* ---------- Mobile ---------- */
+  .menu-toggle { display: none; }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar {
+      position: static;
+      height: auto;
+      padding: 26px 22px;
+    }
+    .sidebar-foot { display: none; }
+    .toc { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+    .content { padding: 40px 22px 70px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="brand">Pet<span class="paw">Love</span>Care</div>
+    <div class="brand-sub">Apresentação Técnica · Backend</div>
+    <nav>
+      <ul class="toc">
+        <li><a href="#arquitetura"><span class="num">01</span> Arquitetura</a></li>
+        <li><a href="#schema"><span class="num">02</span> Schema (Prisma)</a></li>
+        <li><a href="#banco"><span class="num">03</span> Banco de dados</a></li>
+        <li><a href="#auth"><span class="num">04</span> Autenticação</a></li>
+        <li><a href="#validador"><span class="num">05</span> Validador da API</a></li>
+        <li><a href="#deploy"><span class="num">06</span> Deploy</a></li>
+        <li><a href="#clientes"><span class="num">07</span> Apps clientes</a></li>
+        <li><a href="#stack"><span class="num">∑</span> Stack — resumo</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      API REST · NestJS + Prisma + PostgreSQL<br>
+      Hospedada no Railway · deploy via GitHub
+    </div>
+  </aside>
+
+  <!-- ===================== CONTENT ===================== -->
+  <main class="content">
+
+    <header class="hero">
+      <p class="eyebrow">Documentação · API REST</p>
+      <h1>Backend PetLoveCare</h1>
+      <p class="lede">
+        API REST que atende o front <strong>web</strong> <span class="tag">React/Vite</span>
+        e o app <strong>desktop</strong> <span class="tag">Electron</span> (cliente admin).
+        Stack <strong>NestJS + Prisma + PostgreSQL</strong>, hospedada no
+        <strong>Railway</strong> com deploy a partir do <strong>GitHub</strong>.
+      </p>
+    </header>
+
+    <!-- 1. ARQUITETURA -->
+    <section id="arquitetura">
+      <h2><span class="h-num">01</span> Arquitetura</h2>
+      <ul>
+        <li><strong>NestJS 11</strong> sobre <strong>Express</strong> (<code>@nestjs/platform-express</code>), em <strong>TypeScript 5.7</strong>.</li>
+        <li>Organização em <strong>módulos de domínio</strong>, cada um com seu <code>controller</code> (rotas), <code>service</code> (regras) e <code>*.spec.ts</code> (testes):
+          <ul>
+            <li><code>clientes</code>, <code>administradores</code>, <code>pets</code>, <code>servicos</code>, <code>agendamentos</code>, <code>feedback</code>, <code>auth</code></li>
+            <li><code>prisma</code> como módulo <strong>compartilhado</strong> (acesso ao banco via injeção de dependência).</li>
+          </ul>
+        </li>
+        <li>Fluxo de uma requisição:</li>
+      </ul>
+      <pre><code>Cliente (web/desktop)
+      │  HTTP + JSON
+      ▼
+Controller  →  ValidationPipe (DTO)  →  Service (regra de negócio)  →  PrismaService  →  PostgreSQL</code></pre>
+      <ul>
+        <li><code>src/main.ts</code>: cria a app, habilita <strong>CORS</strong> (libera web em <code>localhost:5173</code> e o desktop) e registra o <strong><code>ValidationPipe</code> global</strong>. Sobe em <code>process.env.PORT || 3000</code>.</li>
+      </ul>
+    </section>
+
+    <!-- 2. SCHEMA -->
+    <section id="schema">
+      <h2><span class="h-num">02</span> Schema (Prisma)</h2>
+      <ul>
+        <li>Fonte única de verdade em <strong><code>prisma/schema.prisma</code></strong>: define modelos, relações e o enum de status.</li>
+        <li>O <strong>Prisma Client</strong> é gerado a partir do schema (<code>prisma generate</code>) e dá acesso tipado ao banco.</li>
+        <li>Mudanças de modelo viram <strong>migrations versionadas</strong> em <code>prisma/migrations/</code> (init: <code>20260601204755_init</code>).</li>
+      </ul>
+
+      <h3>Entidades</h3>
+      <ul class="entities">
+        <li><b>Cliente</b> (<code>cpf</code> PK) — nome, telefone, email (único), senha.</li>
+        <li><b>Administrador</b> (<code>cpf</code> PK) — mesmos campos.</li>
+        <li><b>Pet</b> (<code>id</code> PK) — pertence a um Cliente; espécie, raça, idade, observações.</li>
+        <li><b>Servico</b> (<code>id</code> PK) — criado por um Administrador; <code>preco Decimal(10,2)</code>, <code>duracao</code> (min).</li>
+        <li><b>Agendamento</b> (<code>id</code> PK) — liga Cliente, Pet e (opcional) Administrador; <code>data_hora</code>, <code>status</code>, <code>observacao</code>.</li>
+        <li><b>AgendamentoServico</b> — junção <strong>N:M</strong> Agendamento↔Serviço (PK composta). Regra <strong>RN01: máx. 2 serviços por agendamento</strong>.</li>
+        <li><b>Feedback</b> (<code>id</code> PK) — <strong>1:1 com Agendamento</strong> (<code>agendamento_id @unique</code>); <code>nota</code> (1–5), <code>comentario</code>, <code>data</code>, <code>resposta</code>.</li>
+      </ul>
+
+      <h3>Enum <code>StatusAgendamento</code></h3>
+      <div class="enum-chips">
+        <span>agendado</span><span>em_andamento</span><span>finalizado</span><span>cancelado</span>
+      </div>
+
+      <h3>Relacionamentos</h3>
+      <pre><code>Cliente 1───N Pet            Administrador 1───N Servico
+Cliente 1───N Agendamento    Administrador 1───N Agendamento
+Cliente 1───N Feedback       Administrador 1───N Feedback
+Pet     1───N Agendamento
+Agendamento N───N Servico   (via AgendamentoServico)
+Agendamento 1───1 Feedback</code></pre>
+    </section>
+
+    <!-- 3. BANCO -->
+    <section id="banco">
+      <h2><span class="h-num">03</span> Banco de dados</h2>
+      <ul>
+        <li><strong>PostgreSQL</strong> (<code>provider = "postgresql"</code>).</li>
+        <li><strong>ORM: Prisma 7.8</strong> com <strong>driver adapter</strong> <code>@prisma/adapter-pg</code> + <strong><code>pg</code> 8</strong> (conexão Postgres nativa).</li>
+        <li>Conexão centralizada em <code>src/prisma/prisma.service.ts</code>:</li>
+      </ul>
+      <pre><code>const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+super({ adapter });</code></pre>
+      <ul>
+        <li><code>PrismaService</code> é um provider injetável que conecta no boot (<code>onModuleInit</code>) e é reutilizado por todos os serviços.</li>
+      </ul>
+    </section>
+
+    <!-- 4. AUTH -->
+    <section id="auth">
+      <h2><span class="h-num">04</span> Autenticação</h2>
+      <ul>
+        <li><code>auth.service.ts</code> valida <strong>CPF + senha</strong>, distinguindo <strong>cliente</strong> e <strong>administrador</strong>.</li>
+        <li>Mensagem de erro <strong>genérica</strong> ("CPF ou senha inválidos") — não revela qual campo falhou.</li>
+        <li>Em caso de sucesso, retorna os dados do usuário (<code>cpf</code>, <code>nome</code>, <code>email</code>, <code>tipo</code>); o <strong>controle de sessão fica no front</strong> (não há JWT/sessão no servidor ainda).</li>
+      </ul>
+      <div class="note">
+        <span class="warn">⚠️ Senhas em texto puro</span> atualmente — há um <code>TODO</code> explícito para aplicar
+        <strong>hash com bcrypt</strong> na criação e comparar no login. Recomendado antes de produção.
+      </div>
+    </section>
+
+    <!-- 5. VALIDADOR -->
+    <section id="validador">
+      <h2><span class="h-num">05</span> Validador da API</h2>
+      <ul>
+        <li><strong><code>ValidationPipe</code> global</strong> em <code>main.ts</code>, configurado com:
+          <ul>
+            <li><code>whitelist</code> — remove campos que não estão no DTO;</li>
+            <li><code>forbidNonWhitelisted</code> — rejeita requisições com campos desconhecidos;</li>
+            <li><code>transform</code> — converte tipos automaticamente (ex.: <code>"5"</code> → <code>5</code>).</li>
+          </ul>
+        </li>
+        <li>Regras declaradas nos <strong>DTOs</strong> com <strong><code>class-validator</code></strong> + <strong><code>class-transformer</code></strong>
+          (ex.: <code>clientes/dto/criar-cliente.dto.ts</code>, <code>agendamentos/dto/atualizar-status.dto.ts</code>).</li>
+        <li>Resultado: cada endpoint só recebe dados já <strong>validados e tipados</strong>, sem checagem manual nos controllers.</li>
+      </ul>
+    </section>
+
+    <!-- 6. DEPLOY -->
+    <section id="deploy">
+      <h2><span class="h-num">06</span> Deploy</h2>
+      <ul>
+        <li><strong>Plataforma: <a href="https://railway.app/" target="_blank" rel="noopener">Railway</a></strong>, com deploy <strong>a partir do GitHub</strong> — a cada push, o Railway puxa o repositório, builda e sobe a API.</li>
+        <li><strong>PostgreSQL gerenciado no próprio Railway</strong>; o <code>DATABASE_URL</code> de produção é <strong>injetado como variável de ambiente</strong> (não fica no repositório).</li>
+        <li>No deploy, o script <code>start</code> executa <strong><code>prisma migrate deploy</code></strong> antes de subir, aplicando o schema no banco do Railway automaticamente.</li>
+        <li><code>postinstall</code> roda <code>prisma generate</code> para gerar o client durante o build.</li>
+        <li>O <code>.env</code> local (<code>localhost:5432</code>) vale <strong>apenas em desenvolvimento</strong>; em produção, prevalece o <code>DATABASE_URL</code> do Railway.</li>
+      </ul>
+
+      <h3>Variáveis de ambiente</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Variável</th><th>Onde</th><th>Papel</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>DATABASE_URL</code></td><td>Railway (prod) / <code>.env</code> (dev)</td><td>Conexão com o PostgreSQL</td></tr>
+            <tr><td><code>PORT</code></td><td>Railway (prod)</td><td>Porta da API (fallback <code>3000</code>)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. APPS CLIENTES -->
+    <section id="clientes">
+      <h2><span class="h-num">07</span> Aplicações clientes (web e desktop)</h2>
+      <p>Dois frontends consomem a mesma API via <strong>Axios</strong>, ambos em <strong>React 18 + React Router 7 + TypeScript + Vite</strong>.</p>
+
+      <div class="app-grid">
+        <div class="app-card web">
+          <h3>🌐 Web</h3>
+          <p class="repo">web/ — petlovecare-web</p>
+          <ul>
+            <li><strong>React 18 + React Router 7</strong>, build com <strong>Vite 5</strong>, em <strong>TypeScript</strong>.</li>
+            <li><strong>Axios</strong> para falar com a API.</li>
+            <li>Testes: <strong>Vitest</strong> + <strong>Testing Library</strong> (<code>@testing-library/react</code>, <code>user-event</code>, <code>jest-dom</code>) + <strong>jsdom</strong>.</li>
+            <li>Qualidade: <strong>ESLint 9 + Prettier</strong>.</li>
+            <li><strong>Deploy: Firebase Hosting</strong> — script <code>deploy</code> roda <code>vite build</code> e <code>firebase deploy --only hosting</code> (via <code>firebase-tools</code>).</li>
+          </ul>
+          <span class="audience">Público-alvo: tutores (vitrine, agendamento, conta)</span>
+        </div>
+
+        <div class="app-card desktop">
+          <h3>🖥️ Desktop</h3>
+          <p class="repo">desktop/ — cliente admin</p>
+          <ul>
+            <li><strong>Electron 30</strong> empacotado com <strong>electron-builder 24</strong> (<code>electron-builder.json5</code>).</li>
+            <li>Interface também em <strong>React 18 + React Router 7 + Vite</strong>, integrada via <strong>vite-plugin-electron</strong> / <code>vite-plugin-electron-renderer</code>.</li>
+            <li>Processos Electron: <strong>main</strong> (<code>electron/main.ts</code>) e <strong>preload</strong> (<code>electron/preload.ts</code>); entrada empacotada em <code>dist-electron/main.js</code>.</li>
+            <li><strong>Axios</strong> para a API e <strong><code>electron-store</code></strong> para persistência local de configurações.</li>
+            <li><strong>Distribuição:</strong> <code>build</code> roda <code>tsc &amp;&amp; vite build &amp;&amp; electron-builder</code>, gerando o <strong>app instalável</strong> (não é "hospedado" como o web — é distribuído como executável).</li>
+          </ul>
+          <span class="audience">Público-alvo: administradores (serviços, agendamentos, feedbacks)</span>
+        </div>
+      </div>
+
+      <h3>Onde cada parte roda</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Aplicação</th><th>Stack</th><th>Onde fica</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>API</td><td>NestJS + Prisma + PostgreSQL</td><td><strong>Railway</strong> (deploy via GitHub)</td></tr>
+            <tr><td>Web</td><td>React + Vite</td><td><strong>Firebase Hosting</strong></td></tr>
+            <tr><td>Desktop</td><td>Electron + React + Vite</td><td><strong>App instalável</strong> (electron-builder)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack">
+      <h2><span class="h-num">∑</span> Stack — resumo</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Camada</th><th>Tecnologia</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Framework</td><td>NestJS 11 + Express</td></tr>
+            <tr><td>Linguagem</td><td>TypeScript 5.7</td></tr>
+            <tr><td>ORM</td><td>Prisma 7.8 (<code>@prisma/adapter-pg</code> + <code>pg</code>)</td></tr>
+            <tr><td>Banco</td><td>PostgreSQL</td></tr>
+            <tr><td>Validação</td><td>class-validator / class-transformer</td></tr>
+            <tr><td>Config</td><td>@nestjs/config + dotenv</td></tr>
+            <tr><td>Testes</td><td>Jest 30 + Supertest</td></tr>
+            <tr><td>Qualidade</td><td>ESLint 9 + Prettier</td></tr>
+            <tr><td>Deploy</td><td>Railway (via GitHub)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="page-foot">
+      Backend PetLoveCare — Apresentação Técnica · NestJS + Prisma + PostgreSQL
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>
